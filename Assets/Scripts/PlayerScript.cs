@@ -12,11 +12,11 @@ public class PlayerScript : MonoBehaviour
     InputAction _moveAction;
     InputAction _lookAction;
     
-    private float _x, _y;
     float _mouseX, _mouseY;
 
     private Vector3 _move;
     private Transform _cam;
+    private Vector2 _input;
    void Start()
     {   
         _cam = Camera.main.transform;
@@ -26,18 +26,16 @@ public class PlayerScript : MonoBehaviour
     }
 
     
-    void Update()
-    {
-        
-        _x = _moveAction.ReadValue<Vector2>().x;
-        _y = _moveAction.ReadValue<Vector2>().y;
+    void Update(){
+
+        _input= _moveAction.ReadValue<Vector2>();
         
         _mouseX += _lookAction.ReadValue<Vector2>().x;
         _mouseY += _lookAction.ReadValue<Vector2>().y;
 
         _mouseY = Mathf.Clamp(_mouseY, -75f, 75f);  
         
-        _move = new Vector3(_x, 0, _y);
+        _move = new Vector3(_input.x, 0, _input.y);
         _move = transform.rotation * _move;
         _move = _move * _speed;
         _move.y = _gravity;
