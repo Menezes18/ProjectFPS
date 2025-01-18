@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,11 +10,13 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] CharacterController _characterController;
     [SerializeField] private float _speed = 5.0f;
     [SerializeField] private float _gravity = -9.81f;
+    [SerializeField] private float _sensitivity = 5.0f;
     InputAction _moveAction;
     InputAction _lookAction;
     
     float _mouseX, _mouseY;
-
+    
+    
     private Vector3 _move;
     private Transform _cam;
     private Vector2 _input;
@@ -29,9 +32,9 @@ public class PlayerScript : MonoBehaviour
     void Update(){
 
         _input= _moveAction.ReadValue<Vector2>();
-        
-        _mouseX += _lookAction.ReadValue<Vector2>().x;
-        _mouseY += _lookAction.ReadValue<Vector2>().y;
+        Vector2 mouse = _lookAction.ReadValue<Vector2>() * _sensitivity;
+        _mouseX += mouse.x;
+        _mouseY += mouse.y;
 
         _mouseY = Mathf.Clamp(_mouseY, -75f, 75f);  
         
@@ -41,8 +44,11 @@ public class PlayerScript : MonoBehaviour
         _move.y = _gravity;
         _characterController.Move(_move * _speed * Time.deltaTime);
         _cam.position = this.transform.position + Vector3.up * 0.5f;
-        _cam.rotation = Quaternion.Euler(new Vector3(-_mouseY, _mouseX, 0));
         
         transform.rotation = Quaternion.Euler(new Vector3(0, _mouseX, 0));
+    }
+
+    private void LateUpdate(){
+        _cam.rotation = Quaternion.Euler(new Vector3(-_mouseY, _mouseX, 0));
     }
 }
