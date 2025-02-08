@@ -255,7 +255,9 @@ MonoBehaviour:
   _playerInput: {fileID: 145587810}
   _characterController: {fileID: 145587816}
   _speed: 2
-  _gravity: -9.81
+  _gravity: -20
+  _sensitivity: 100
+  _jump: 10
 --- !u!143 &145587816
 CharacterController:
   m_ObjectHideFlags: 0
@@ -449,7 +451,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
